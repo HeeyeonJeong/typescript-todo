@@ -1,7 +1,13 @@
 import React from "react";
+import Template from "./components/Template";
+import TodoHead from "./components/TodoHead";
 
 function App() {
-  return <div className="App">hello</div>;
+  return (
+    <Template>
+      <TodoHead />
+    </Template>
+  );
 }
 
 export default App;
