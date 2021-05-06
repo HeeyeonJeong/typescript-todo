@@ -8,5 +8,10 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     box-sizing: border-box;
+    background-color:#e9ecef;
+    min-height: 100vh;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
