@@ -5,6 +5,7 @@ const TemplateBlock = styled.div`
   width: 414px;
   height: 800px;
   background-color: #ffffff;
+  position: relative;
 `;
 
 function Template({ children }: any) {

@@ -4,7 +4,7 @@ import { Todo } from "../types/TodoType";
 import * as FiIcons from "react-icons/fi";
 import colorCategory from "../options/colorCategory";
 
-interface Custom {
+interface DoneCustom {
   done: boolean;
 }
 
@@ -65,7 +65,7 @@ const ItemCategory = styled.div`
   background-color: ${(props) => props.color};
 `;
 
-const ItemTitle = styled.span<Custom>`
+const ItemTitle = styled.span<DoneCustom>`
   margin: 0 20px;
   ${(props) =>
     props.done &&
