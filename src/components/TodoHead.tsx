@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+interface TodoHeadProps {
+  templateTitle: string;
+}
 
 const TodoHeadBlock = styled.h1`
   height: 62px;
@@ -7,13 +10,16 @@ const TodoHeadBlock = styled.h1`
   display: flex;
   align-items: center;
   padding: 0 13px;
-
   font-size: 24px;
   font-weight: normal;
 `;
 
-function TodoHead() {
-  return <TodoHeadBlock>투-두 리스트</TodoHeadBlock>;
+function TodoHead({ templateTitle }: TodoHeadProps) {
+  return <TodoHeadBlock>{templateTitle}</TodoHeadBlock>;
 }
+
+TodoHead.defaultProps = {
+  templateTitle: "투-두 리스트",
+};
 
 export default TodoHead;
