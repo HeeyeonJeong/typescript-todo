@@ -52,11 +52,15 @@ const ItemList = styled.li`
     }
   }
 
-  .item-content {
+  .item-contents {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .content-left {
+    display: flex;
   }
 `;
 const ItemCategory = styled.div`
@@ -81,8 +85,8 @@ function TodoItem({ id, category, text, done }: Todo) {
   return (
     <ItemList>
       <ItemCategory color={findColor?.color}></ItemCategory>
-      <div className="item-content">
-        <div>
+      <div className="item-contents">
+        <div className="content-left">
           <ItemTitle done={done}>{text}</ItemTitle>
           <EditIcon size={15} />
         </div>

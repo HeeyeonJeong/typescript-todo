@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import * as BsIcons from "react-icons/bs";
+import TodoModal from "./TodoModal";
 
 interface OpenCustom {
   open: boolean;
@@ -15,6 +16,7 @@ const TodoFooterBlock = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 `;
 
 const ModalIcon = styled(BsIcons.BsPlusCircle)<OpenCustom>`
@@ -31,12 +33,20 @@ const ModalIcon = styled(BsIcons.BsPlusCircle)<OpenCustom>`
 
 function TodoFooter() {
   const [open, setOpen] = useState(false);
-  const onToggle = () => setOpen(!open);
+  const [createModal, setCreateModal] = useState(false);
+
+  const onToggle = () => {
+    setOpen(!open);
+    setCreateModal(!createModal);
+  };
 
   return (
-    <TodoFooterBlock>
-      <ModalIcon size={38} onClick={onToggle} open={open} />
-    </TodoFooterBlock>
+    <>
+      <TodoFooterBlock>
+        <ModalIcon size={38} onClick={onToggle} open={open} />
+      </TodoFooterBlock>
+      <TodoModal visible={createModal} />
+    </>
   );
 }
 
