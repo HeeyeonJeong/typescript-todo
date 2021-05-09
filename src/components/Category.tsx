@@ -3,9 +3,12 @@ import styled from "styled-components";
 
 interface CategoryProps {
   color: string;
+  count: number;
 }
 
 const CategoryBlock = styled.div`
+  width: 50px;
+
   & + & {
     margin-left: 10px;
   }
@@ -23,11 +26,11 @@ const CategoryBlock = styled.div`
   }
 `;
 
-function Category({ color }: CategoryProps) {
+function Category({ color, count }: CategoryProps) {
   return (
     <CategoryBlock color={color}>
       <span className="category-color" color={color}></span>
-      <span className="category-count">0개</span>
+      <span>{count}개</span>
     </CategoryBlock>
   );
 }

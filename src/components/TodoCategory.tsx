@@ -1,5 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import colorCategory from "../options/colorCategory";
+import { RootReducer } from "../reducers";
 import Category from "./Category";
 
 const TodoCategoryBlock = styled.div`
@@ -26,19 +29,26 @@ const TodoCategoryBlock = styled.div`
 `;
 
 function TodoCategory() {
+  const todosData = useSelector((state: RootReducer) => state.todos);
+
+  const todosCount = todosData.filter((todo) => !todo.done).length;
+  const colorCounter = (color: string) =>
+    todosData.filter((todo) => todo.category === color && !todo.done).length;
+
   return (
     <TodoCategoryBlock>
       <div className="total-count-box">
         남은 TO-DO
-        <span className="total-count">5개</span>
+        <span className="total-count">{todosCount}개</span>
       </div>
       <div className="total-item-count">
-        <Category color="#ffafb0" />
-        <Category color="#ffc282" />
-        <Category color="#fbff8f" />
-        <Category color="#d3fc8d" />
-        <Category color="#aee4ff" />
-        <Category color="#b5c7ed" />
+        {colorCategory.map((color) => (
+          <Category
+            key={color.label}
+            color={color.color}
+            count={colorCounter(color.label)}
+          />
+        ))}
       </div>
     </TodoCategoryBlock>
   );
