@@ -55,9 +55,19 @@ const todosSlice = createSlice({
         return { payload: { id: nextTodoId++, category, text, done } };
       },
     },
+    deleteTodo: (state, { payload: id }) => {
+      return state.filter((data) => data.id !== id);
+    },
+    editTodo: (state, { payload: id }) => {},
+    toggleTodo: (state, { payload: id }) => {
+      const selectTodo = state.find((data) => data.id === id);
+      if (selectTodo) {
+        selectTodo.done = !selectTodo.done;
+      }
+    },
   },
 });
 
-export const { addTodo } = todosSlice.actions;
+export const { addTodo, deleteTodo, editTodo, toggleTodo } = todosSlice.actions;
 
 export default todosSlice.reducer;

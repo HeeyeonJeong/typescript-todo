@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { Todo } from "../types/TodoType";
 import * as FiIcons from "react-icons/fi";
 import colorCategory from "../options/colorCategory";
+import TodoModal from "./TodoModal";
+import { useDispatch } from "react-redux";
+import { deleteTodo, toggleTodo } from "../features/todos";
 
 interface DoneCustom {
   done: boolean;
@@ -80,7 +83,14 @@ const ItemTitle = styled.span<DoneCustom>`
 `;
 
 function TodoItem({ id, category, text, done }: Todo) {
+  const dispatch = useDispatch();
   const findColor = colorCategory.find((color) => color.label === category);
+
+  const [editModal, setEditModal] = useState(false);
+
+  const onEditModal = () => {
+    setEditModal(true);
+  };
 
   return (
     <ItemList>
@@ -88,13 +98,18 @@ function TodoItem({ id, category, text, done }: Todo) {
       <div className="item-contents">
         <div className="content-left">
           <ItemTitle done={done}>{text}</ItemTitle>
-          <EditIcon size={15} />
+          <EditIcon size={15} onClick={onEditModal} />
         </div>
         <div>
-          <RemoveIcon size={20} />
-          {done ? <CheckIcon size={24} /> : <UnCheckIcon size={24} />}
+          <RemoveIcon size={20} onClick={() => dispatch(deleteTodo(id))} />
+          {done ? (
+            <CheckIcon size={24} onClick={() => dispatch(toggleTodo(id))} />
+          ) : (
+            <UnCheckIcon size={24} onClick={() => dispatch(toggleTodo(id))} />
+          )}
         </div>
       </div>
+      <TodoModal visible={editModal} />
     </ItemList>
   );
 }

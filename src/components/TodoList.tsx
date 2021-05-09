@@ -5,7 +5,6 @@ import TodoItem from "./TodoItem";
 
 function TodoList() {
   const todosData = useSelector((state: RootReducer) => state.todos);
-  console.log(todosData);
 
   return (
     <ul>
