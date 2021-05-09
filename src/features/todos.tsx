@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Todo } from "../types/TodoType";
 
-let nextTodoId = 2;
+let nextTodoId = 6;
 
 const initialState: Todo[] = [
   {
@@ -48,11 +48,11 @@ const todosSlice = createSlice({
   reducers: {
     addTodo: {
       reducer(state, action: PayloadAction<Todo>) {
-        const { id, category, text } = action.payload;
-        state.push({ id, category, text, done: false });
+        const { category, text } = action.payload;
+        state.push({ id: nextTodoId++, category, text, done: false });
       },
-      prepare(category: string, text: string, done: boolean) {
-        return { payload: { id: nextTodoId++, category, text, done } };
+      prepare(category: string, text: string) {
+        return { payload: { id: nextTodoId++, category, text, done: false } };
       },
     },
     deleteTodo: (state, { payload: id }) => {

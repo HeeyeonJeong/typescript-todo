@@ -1,13 +1,19 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 import { RootReducer } from "../reducers";
 import TodoItem from "./TodoItem";
+
+const TodoListBlock = styled.ul`
+  overflow: auto;
+  height: 600px;
+`;
 
 function TodoList() {
   const todosData = useSelector((state: RootReducer) => state.todos);
 
   return (
-    <ul>
+    <TodoListBlock>
       {todosData.map((todo) => (
         <TodoItem
           key={todo.id}
@@ -17,7 +23,7 @@ function TodoList() {
           done={todo.done}
         />
       ))}
-    </ul>
+    </TodoListBlock>
   );
 }
 

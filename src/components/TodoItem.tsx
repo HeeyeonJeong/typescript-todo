@@ -88,6 +88,10 @@ function TodoItem({ id, category, text, done }: Todo) {
 
   const [editModal, setEditModal] = useState(false);
 
+  const onCancel = () => {
+    setEditModal(false);
+  };
+
   const onEditModal = () => {
     setEditModal(true);
   };
@@ -109,7 +113,13 @@ function TodoItem({ id, category, text, done }: Todo) {
           )}
         </div>
       </div>
-      <TodoModal visible={editModal} />
+      <TodoModal
+        visible={editModal}
+        templateTitle={"투-두 수정하기"}
+        modalTitle={"Edit"}
+        modalButton={"수정하기"}
+        onCancel={onCancel}
+      />
     </ItemList>
   );
 }

@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import * as AiIcons from "react-icons/ai";
 import TodoHead from "./TodoHead";
 import ColorButton from "./ColorButton";
 import colorCategory from "../options/colorCategory";
-
+import { addTodo } from "../features/todos";
+import { useDispatch } from "react-redux";
+import Button from "./Button";
 interface TodoModalProps {
   visible: boolean;
+  onCancel: () => void;
+  templateTitle: string;
+  modalTitle: string;
+  modalButton: string;
 }
 
 const fadeIn = keyframes`
@@ -18,18 +24,14 @@ const fadeIn = keyframes`
   }
 `;
 
-const TodoModalBlock = styled.div<TodoModalProps>`
-  ${(props) =>
-    props.visible &&
-    css`
-      position: absolute;
-      top: 0;
-      width: 414px;
-      height: 100%;
-      background-color: #ffffff;
-    `};
-
-  animation-duration: 0.13s;
+const TodoModalBlock = styled.div`
+  position: absolute;
+  top: 0;
+  width: 414px;
+  height: 100%;
+  background-color: #ffffff;
+  z-index: 10;
+  animation-duration: 0.1s;
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
 
@@ -47,6 +49,7 @@ const TodoModalBlock = styled.div<TodoModalProps>`
     }
 
     button {
+      cursor: pointer;
       border: 1px solid #c4c4c4;
       border-radius: 5px;
       width: 98px;
@@ -71,33 +74,56 @@ const TodoModalBlock = styled.div<TodoModalProps>`
   }
 `;
 
-function TodoModal({ visible }: TodoModalProps) {
+function TodoModal({
+  visible,
+  onCancel,
+  templateTitle,
+  modalTitle,
+  modalButton,
+}: TodoModalProps) {
   const [selectColor, setSelectColor] = useState(colorCategory[0].label);
+  const dispatch = useDispatch();
 
-  console.log(selectColor);
+  const [todo, setTodo] = useState({
+    category: "",
+    text: "",
+  });
+
+  const onChange = (e: any) => {
+    setTodo({
+      category: selectColor,
+      text: e.target.value,
+    });
+    console.log(todo);
+  };
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    dispatch(addTodo(todo.category, todo.text));
+    // setTodo({ category: "", text: "" });
+  };
+
+  if (!visible) return null;
 
   return (
-    <>
-      {visible && (
-        <TodoModalBlock visible>
-          <TodoHead templateTitle={"투-두 작성하기"} />
-          <form className="modal-contents">
-            <div className="modal-title-box">
-              <h2>Write</h2>
-              <button type="submit">등록하기</button>
-            </div>
-            <div className="modal-colors-box">
-              <ColorButton
-                selectColor={selectColor}
-                setSelectColor={setSelectColor}
-              />
-              <AiIcons.AiOutlineFormatPainter size={24} />
-            </div>
-            <textarea rows={25}></textarea>
-          </form>
-        </TodoModalBlock>
-      )}
-    </>
+    <TodoModalBlock>
+      <TodoHead templateTitle={templateTitle} />
+      <form className="modal-contents" onSubmit={onSubmit}>
+        <div className="modal-title-box">
+          <h2>{modalTitle}</h2>
+          <button type="submit">{modalButton}</button>
+        </div>
+        <div className="modal-colors-box">
+          <ColorButton
+            selectColor={selectColor}
+            setSelectColor={setSelectColor}
+          />
+          <AiIcons.AiOutlineFormatPainter size={24} />
+        </div>
+        <textarea rows={25} onChange={onChange} name="text" />
+      </form>
+      <Button onOff={onCancel} isClose={true} />
+    </TodoModalBlock>
   );
 }
 

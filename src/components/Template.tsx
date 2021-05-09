@@ -6,6 +6,7 @@ const TemplateBlock = styled.div`
   height: 800px;
   background-color: #ffffff;
   position: relative;
+  overflow: hidden;
 `;
 
 function Template({ children }: any) {
