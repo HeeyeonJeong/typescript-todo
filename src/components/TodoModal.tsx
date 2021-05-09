@@ -91,16 +91,15 @@ function TodoModal({
 
   const onChange = (e: any) => {
     setTodo({
-      category: selectColor,
+      ...todo,
       text: e.target.value,
     });
-    console.log(todo);
   };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(addTodo(todo.category, todo.text));
-    // setTodo({ category: "", text: "" });
+    dispatch(addTodo(selectColor, todo.text));
+    onCancel();
   };
 
   if (!visible) return null;
@@ -120,7 +119,7 @@ function TodoModal({
           />
           <AiIcons.AiOutlineFormatPainter size={24} />
         </div>
-        <textarea rows={25} onChange={onChange} name="text" />
+        <textarea rows={25} onChange={onChange} name="text" required />
       </form>
       <Button onOff={onCancel} isClose={true} />
     </TodoModalBlock>
