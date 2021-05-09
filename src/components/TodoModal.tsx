@@ -8,6 +8,8 @@ import { addTodo } from "../features/todos";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 interface TodoModalProps {
+  itemColor?: string;
+  text?: string;
   visible: boolean;
   onCancel: () => void;
   templateTitle: string;
@@ -75,6 +77,8 @@ const TodoModalBlock = styled.div`
 `;
 
 function TodoModal({
+  itemColor,
+  text,
   visible,
   onCancel,
   templateTitle,
@@ -84,12 +88,14 @@ function TodoModal({
   const [selectColor, setSelectColor] = useState(colorCategory[0].label);
   const dispatch = useDispatch();
 
+  const [editText, setEditText] = useState(text);
   const [todo, setTodo] = useState({
     category: "",
     text: "",
   });
 
   const onChange = (e: any) => {
+    setEditText(e.target.value);
     setTodo({
       ...todo,
       text: e.target.value,
@@ -114,12 +120,19 @@ function TodoModal({
         </div>
         <div className="modal-colors-box">
           <ColorButton
+            itemColor={itemColor}
             selectColor={selectColor}
             setSelectColor={setSelectColor}
           />
           <AiIcons.AiOutlineFormatPainter size={24} />
         </div>
-        <textarea rows={25} onChange={onChange} name="text" required />
+        <textarea
+          rows={25}
+          onChange={onChange}
+          name="text"
+          value={editText}
+          required
+        />
       </form>
       <Button onOff={onCancel} isClose={true} />
     </TodoModalBlock>

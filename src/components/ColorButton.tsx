@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import colorCategory from "../options/colorCategory";
 
 interface ColorButtonProps {
+  itemColor: string | undefined;
   selectColor: string;
   setSelectColor: (value: string) => void;
 }
@@ -32,7 +33,20 @@ const ColorButtonBlock = styled.div`
   }
 `;
 
-function ColorButton({ selectColor, setSelectColor }: ColorButtonProps) {
+function ColorButton({
+  itemColor,
+  selectColor,
+  setSelectColor,
+}: ColorButtonProps) {
+  const [editChecked, setEditChecked] = useState(
+    itemColor ? itemColor : selectColor
+  );
+
+  const onChange = (e: any) => {
+    setEditChecked(e.target.value);
+    setSelectColor(e.target.value);
+  };
+
   return (
     <ColorButtonBlock>
       {colorCategory.map((color) => (
@@ -42,8 +56,8 @@ function ColorButton({ selectColor, setSelectColor }: ColorButtonProps) {
             type="radio"
             name="color-selector"
             value={color.label}
-            onChange={(e) => setSelectColor(e.target.value)}
-            checked={color.label === selectColor}
+            onChange={onChange}
+            checked={color.label === editChecked}
           />
           <Label htmlFor={color.label} color={color.color} />
         </div>

@@ -114,6 +114,8 @@ function TodoItem({ id, category, text, done }: Todo) {
         </div>
       </div>
       <TodoModal
+        itemColor={findColor?.label}
+        text={text}
         visible={editModal}
         templateTitle={"투-두 수정하기"}
         modalTitle={"Edit"}
