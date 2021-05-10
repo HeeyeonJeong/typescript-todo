@@ -101,14 +101,13 @@ function TodoModal({
 
     if (modalTitle === "Write") {
       dispatch(addTodo({ category: selectColor, text: todoText }));
+      setTodoText("");
+      setSelectColor("red");
     } else {
       dispatch(
         editTodo({ id: todoId!, category: selectColor, text: todoText })
       );
     }
-
-    setTodoText("");
-    setSelectColor("red");
 
     onCancel();
   };

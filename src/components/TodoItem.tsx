@@ -74,6 +74,11 @@ const ItemCategory = styled.div`
 
 const ItemTitle = styled.span<DoneCustom>`
   margin: 0 20px;
+  width: 250px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   ${(props) =>
     props.done &&
     css`
