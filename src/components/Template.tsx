@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 const TemplateBlock = styled.div`
@@ -9,8 +9,8 @@ const TemplateBlock = styled.div`
   overflow: hidden;
 `;
 
-function Template({ children }: any) {
+const Template = ({ children }: { children: ReactNode }) => {
   return <TemplateBlock>{children}</TemplateBlock>;
-}
+};
 
 export default Template;

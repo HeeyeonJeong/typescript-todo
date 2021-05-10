@@ -4,3 +4,12 @@ export interface Todo {
   text: string;
   done: boolean;
 }
+
+export type TodoPayload = {
+  category: string;
+  text: string;
+};
+
+export interface TodoEditPayload extends TodoPayload {
+  id: number;
+}

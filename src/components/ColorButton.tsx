@@ -42,7 +42,7 @@ function ColorButton({
     itemColor ? itemColor : selectColor
   );
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditChecked(e.target.value);
     setSelectColor(e.target.value);
   };

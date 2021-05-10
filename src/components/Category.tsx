@@ -14,15 +14,15 @@ const CategoryBlock = styled.div`
   }
 
   .category-color {
-    margin-right: 10px;
     display: inline-block;
+    position: relative;
+    top: -1px;
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    vertical-align: middle;
+    margin-right: 10px;
     background: ${(props) => props.color || "black"};
-    position: relative;
-    top: -1px;
+    vertical-align: middle;
   }
 `;
 

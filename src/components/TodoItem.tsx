@@ -5,7 +5,7 @@ import * as FiIcons from "react-icons/fi";
 import colorCategory from "../options/colorCategory";
 import TodoModal from "./TodoModal";
 import { useDispatch } from "react-redux";
-import { deleteTodo, toggleTodo } from "../features/todos";
+import { deleteTodo, editTodo, toggleTodo } from "../features/todos";
 
 interface DoneCustom {
   done: boolean;
@@ -98,7 +98,7 @@ function TodoItem({ id, category, text, done }: Todo) {
 
   return (
     <ItemList>
-      <ItemCategory color={findColor?.color}></ItemCategory>
+      <ItemCategory color={findColor!.color} />
       <div className="item-contents">
         <div className="content-left">
           <ItemTitle done={done}>{text}</ItemTitle>
@@ -114,8 +114,9 @@ function TodoItem({ id, category, text, done }: Todo) {
         </div>
       </div>
       <TodoModal
-        itemColor={findColor?.label}
+        itemColor={findColor!.label}
         text={text}
+        todoId={id}
         visible={editModal}
         templateTitle={"투-두 수정하기"}
         modalTitle={"Edit"}

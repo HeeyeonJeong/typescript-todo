@@ -4,10 +4,11 @@ import * as AiIcons from "react-icons/ai";
 import TodoHead from "./TodoHead";
 import ColorButton from "./ColorButton";
 import colorCategory from "../options/colorCategory";
-import { addTodo } from "../features/todos";
+import { addTodo, editTodo } from "../features/todos";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 interface TodoModalProps {
+  todoId?: number;
   itemColor?: string;
   text?: string;
   visible: boolean;
@@ -77,6 +78,7 @@ const TodoModalBlock = styled.div`
 `;
 
 function TodoModal({
+  todoId,
   itemColor,
   text,
   visible,
@@ -85,26 +87,29 @@ function TodoModal({
   modalTitle,
   modalButton,
 }: TodoModalProps) {
-  const [selectColor, setSelectColor] = useState(colorCategory[0].label);
   const dispatch = useDispatch();
 
-  const [editText, setEditText] = useState(text);
-  const [todo, setTodo] = useState({
-    category: "",
-    text: "",
-  });
+  const [selectColor, setSelectColor] = useState(colorCategory[0].label);
+  const [todoText, setTodoText] = useState(text || "");
 
-  const onChange = (e: any) => {
-    setEditText(e.target.value);
-    setTodo({
-      ...todo,
-      text: e.target.value,
-    });
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTodoText(e.target.value);
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addTodo(selectColor, todo.text));
+
+    if (modalTitle === "Write") {
+      dispatch(addTodo({ category: selectColor, text: todoText }));
+    } else {
+      dispatch(
+        editTodo({ id: todoId!, category: selectColor, text: todoText })
+      );
+    }
+
+    setTodoText("");
+    setSelectColor("red");
+
     onCancel();
   };
 
@@ -130,7 +135,7 @@ function TodoModal({
           rows={25}
           onChange={onChange}
           name="text"
-          value={editText}
+          value={todoText}
           required
         />
       </form>

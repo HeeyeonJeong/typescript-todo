@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Todo } from "../types/TodoType";
-
-let nextTodoId = 6;
+import { Todo, TodoEditPayload, TodoPayload } from "../types/TodoType";
 
 const initialState: Todo[] = [
   {
@@ -46,24 +44,24 @@ const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: {
-      reducer(state, action: PayloadAction<Todo>) {
-        const { category, text } = action.payload;
-        state.push({ id: nextTodoId++, category, text, done: false });
-      },
-      prepare(category: string, text: string) {
-        return { payload: { id: nextTodoId++, category, text, done: false } };
-      },
+    addTodo: (state, action: PayloadAction<TodoPayload>) => {
+      const { category, text } = action.payload;
+      const todoIds = state.map((todo) => todo.id);
+      const lastId = Math.max(0, ...todoIds) + 1;
+      state.push({ id: lastId, category, text, done: false });
     },
     deleteTodo: (state, { payload: id }) => {
       return state.filter((data) => data.id !== id);
     },
-    editTodo: (state, { payload: id }) => {},
+    editTodo: (state, action: PayloadAction<TodoEditPayload>) => {
+      return state.map((data) =>
+        data.id === action.payload.id ? { ...data, ...action.payload } : data
+      );
+    },
     toggleTodo: (state, { payload: id }) => {
-      const selectTodo = state.find((data) => data.id === id);
-      if (selectTodo) {
-        selectTodo.done = !selectTodo.done;
-      }
+      return state.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      );
     },
   },
 });

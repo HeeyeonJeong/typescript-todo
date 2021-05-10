@@ -21,15 +21,15 @@ const ModalIcon = styled(BsIcons.BsPlusCircle)<IconProps>`
 `;
 
 const ButtonBlock = styled.div`
-  width: 100%;
-  height: 64px;
-  position: absolute;
-  bottom: 0;
-  border-top: 1px solid #dedede;
-  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 64px;
+  border-top: 1px solid #dedede;
+  background: #ffffff;
 
   button {
     border: none;
